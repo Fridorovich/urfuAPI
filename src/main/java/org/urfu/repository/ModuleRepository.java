@@ -7,4 +7,5 @@ import java.util.UUID;
 
 @Repository
 public interface ModuleRepository extends JpaRepository<Module, UUID> {
+    boolean existsByTitle(String title);
 }
