@@ -7,7 +7,6 @@ RUN mvn dependency:go-offline -B
 
 COPY src src
 
-
 RUN mvn clean package -DskipTests -B
 
 RUN jar tf target/*.jar | grep -E "META-INF/MANIFEST.MF"
@@ -16,11 +15,15 @@ FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
+RUN mkdir -p /app/logs && \
+    addgroup -S appgroup && \
+    adduser -S appuser -G appgroup && \
+    chown -R appuser:appgroup /app/logs
+
 COPY --from=build /app/target/*.jar app.jar
 
 RUN jar tf app.jar | head -20
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser
 
 EXPOSE 8080

@@ -44,7 +44,20 @@ server:
 
 logging:
   level:
-    com.example.education: DEBUG
+    root: INFO
+    org.urfu: DEBUG
+    org.springframework.security: DEBUG
     org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
     liquibase: INFO
+
+  file:
+    name: /app/logs/application.log
+
+  logback:
+    rollingpolicy:
+      max-history: 7
+      max-file-size: 10MB
+      total-size-cap: 100MB
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"

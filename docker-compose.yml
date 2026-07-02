@@ -35,10 +35,13 @@ services:
       SPRING_LIQUIBASE_ENABLED: "true"
       SPRING_SECURITY_USER_NAME: ${SECURITY_USER_NAME}
       SPRING_SECURITY_USER_PASSWORD: ${SECURITY_USER_PASSWORD}
+      LOG_PATH: /app/logs
 
       JAVA_OPTS: "-Xmx512m -Xms256m"
     ports:
       - "8080:8080"
+    volumes:
+      - ./logs:/app/logs
     networks:
       - education-network
     restart: unless-stopped
