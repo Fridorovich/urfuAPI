@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface HeadRepository extends JpaRepository<Head, UUID> {
+    boolean existsByFullname(String fullname);
 }
