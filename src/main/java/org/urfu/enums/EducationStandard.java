@@ -1,5 +1,8 @@
 package org.urfu.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum EducationStandard {
     SUOS("СУОС"),
     SUT("СУТ"),
@@ -13,7 +16,4 @@ public enum EducationStandard {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
 }

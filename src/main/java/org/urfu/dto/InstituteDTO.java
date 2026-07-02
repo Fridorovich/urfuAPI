@@ -1,5 +1,6 @@
 package org.urfu.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,5 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class InstituteDTO {
     private UUID uuid;
+
+    @NotBlank(message = "Название института обязательно")
     private String title;
 }

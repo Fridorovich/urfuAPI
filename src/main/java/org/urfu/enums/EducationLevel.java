@@ -1,5 +1,8 @@
 package org.urfu.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum EducationLevel {
     BACHELOR("Бакалавр"),
     APPLIED_BACHELOR("Прикладной бакалавриат"),
@@ -13,7 +16,4 @@ public enum EducationLevel {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
 }

@@ -21,6 +21,6 @@ public class Institute {
     @Column(name = "uuid", updatable = false, nullable = false)
     private UUID uuid;
 
-    @Column(name = "title", nullable = false, length = 255, unique = true)
+    @Column(name = "title", nullable = false, unique = true)
     private String title;
 }

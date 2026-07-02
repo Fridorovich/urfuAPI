@@ -20,6 +20,6 @@ public class Head {
     @Column(name = "uuid", updatable = false, nullable = false)
     private UUID uuid;
 
-    @Column(name = "fullname", nullable = false, length = 255)
+    @Column(name = "fullname", nullable = false)
     private String fullname;
 }

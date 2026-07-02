@@ -1,5 +1,8 @@
 package org.urfu.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum ModuleType {
     STANDARD("Стандартный модуль"),
     PROJECT_EDUCATION("Модуль проектного обучения"),
@@ -13,7 +16,4 @@ public enum ModuleType {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
 }

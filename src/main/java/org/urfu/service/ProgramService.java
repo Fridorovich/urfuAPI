@@ -132,26 +132,14 @@ public class ProgramService {
                     .collect(Collectors.toList());
         }
 
-        //Ручная сортировка, норм?
-        Comparator<Program> comparator;
-        switch (sortBy.toLowerCase()) {
-            case "title":
-                comparator = Comparator.comparing(Program::getTitle, String.CASE_INSENSITIVE_ORDER);
-                break;
-            case "cypher":
-                comparator = Comparator.comparing(Program::getCypher, String.CASE_INSENSITIVE_ORDER);
-                break;
-            case "accreditationdate":
-            case "accreditation":
-                comparator = Comparator.comparing(Program::getAccreditationDate);
-                break;
-            case "standard":
-                comparator = Comparator.comparing(p -> p.getStandard().name());
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid sort field: " + sortBy +
-                        ". Allowed: title, cypher, accreditationDate, standard");
-        }
+        Comparator<Program> comparator = switch (sortBy.toLowerCase()) {
+            case "title" -> Comparator.comparing(Program::getTitle, String.CASE_INSENSITIVE_ORDER);
+            case "cypher" -> Comparator.comparing(Program::getCypher, String.CASE_INSENSITIVE_ORDER);
+            case "accreditationdate", "accreditation" -> Comparator.comparing(Program::getAccreditationDate);
+            case "standard" -> Comparator.comparing(p -> p.getStandard().name());
+            default -> throw new IllegalArgumentException("Invalid sort field: " + sortBy +
+                    ". Allowed: title, cypher, accreditationDate, standard");
+        };
 
         sorted.sort(comparator);
 
