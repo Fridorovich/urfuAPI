@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: education-service
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/education_db
+    username: ${DB_USERNAME:education_user}
+    password: ${DB_PASSWORD:education_pass}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+        default_schema: public
+    show-sql: false
+    open-in-view: false
+
+  liquibase:
+    change-log: classpath:db/changelog/v1/changelog-master.yml
+    enabled: true
+    drop-first: false
+    default-schema: public
+    parameters:
+      tablePrefix: ""
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+logging:
+  level:
+    com.example.education: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    liquibase: INFO

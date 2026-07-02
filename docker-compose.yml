@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: education-postgres
+    environment:
+      POSTGRES_DB: education_db
+      POSTGRES_USER: education_user
+      POSTGRES_PASSWORD: education_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U education_user -d education_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - education-network
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: education-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/education_db
+      SPRING_DATASOURCE_USERNAME: education_user
+      SPRING_DATASOURCE_PASSWORD: education_pass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_LIQUIBASE_ENABLED: "true"
+      JAVA_OPTS: "-Xmx512m -Xms256m"
+    ports:
+      - "8080:8080"
+    networks:
+      - education-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  education-network:
+    driver: bridge

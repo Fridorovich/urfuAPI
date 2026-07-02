@@ -1,0 +1,138 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: fridorovich
+      changes:
+        - createTable:
+            tableName: institutes
+            columns:
+              - column:
+                  name: uuid
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+        - createTable:
+            tableName: heads
+            columns:
+              - column:
+                  name: uuid
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: fullname
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: modules
+            columns:
+              - column:
+                  name: uuid
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: programs
+            columns:
+              - column:
+                  name: uuid
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cypher
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: level
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: standard
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: institute_uuid
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_program_institute
+                    references: institutes(uuid)
+              - column:
+                  name: head_uuid
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_program_head
+                    references: heads(uuid)
+              - column:
+                  name: accreditation_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: program_modules
+            columns:
+              - column:
+                  name: program_uuid
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_program_modules_program
+                    references: programs(uuid)
+              - column:
+                  name: module_uuid
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_program_modules_module
+                    references: modules(uuid)
+        - addPrimaryKey:
+            tableName: program_modules
+            columnNames: program_uuid, module_uuid
+            constraintName: pk_program_modules
+      rollback:
+        - dropTable:
+            tableName: program_modules
+            cascadeConstraints: true
+        - dropTable:
+            tableName: programs
+            cascadeConstraints: true
+        - dropTable:
+            tableName: modules
+            cascadeConstraints: true
+        - dropTable:
+            tableName: heads
+            cascadeConstraints: true
+        - dropTable:
+            tableName: institutes
+            cascadeConstraints: true

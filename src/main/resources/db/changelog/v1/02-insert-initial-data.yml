@@ -1,0 +1,90 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: fridorovich
+      changes:
+        - insert:
+            tableName: institutes
+            columns:
+              - column: {name: uuid, value: "6a0099be-2bd4-409b-aee2-10984c4df380"}
+              - column: {name: title, value: "Институт радиоэлектроники и информационных технологий - РТФ"}
+        - insert:
+            tableName: institutes
+            columns:
+              - column: {name: uuid, value: "7b1100cf-3ce5-510c-bff3-21095d5e0491"}
+              - column: {name: title, value: "Институт компьютерных наук"}
+        - insert:
+            tableName: institutes
+            columns:
+              - column: {name: uuid, value: "8c2211df-4df6-621d-aee4-32106e6f1502"}
+              - column: {name: title, value: "Институт физики"}
+        - insert:
+            tableName: heads
+            columns:
+              - column: {name: uuid, value: "0e887f76-2a05-11e1-b174-00259030b74f"}
+              - column: {name: fullname, value: "Обухов Олег Владимирович"}
+        - insert:
+            tableName: heads
+            columns:
+              - column: {name: uuid, value: "1f998a87-3b16-22f2-c285-1136a041c86a"}
+              - column: {name: fullname, value: "Нищих Егор Сергеевич"}
+        - insert:
+            tableName: heads
+            columns:
+              - column: {name: uuid, value: "2aaab98a-4c27-33a3-d396-2247b152d97a"}
+              - column: {name: fullname, value: "Маск Илон Эрлович"}
+        - insert:
+            tableName: modules
+            columns:
+              - column: {name: uuid, value: "54e561d2-0a27-4644-b67a-47ab4e7881bc"}
+              - column: {name: title, value: "Графика"}
+              - column: {name: type, value: "STANDARD"}
+        - insert:
+            tableName: modules
+            columns:
+              - column: {name: uuid, value: "65f672e3-1b38-5755-c78b-58bc5e8992cd"}
+              - column: {name: title, value: "Курс по успешному успеху"}
+              - column: {name: type, value: "PROJECT_EDUCATION"}
+        - insert:
+            tableName: modules
+            columns:
+              - column: {name: uuid, value: "76a783f4-2c49-6866-d89c-69cd6f9aa3de"}
+              - column: {name: title, value: "Крутая экономика"}
+              - column: {name: type, value: "MINOR"}
+        - insert:
+            tableName: programs
+            columns:
+              - column: {name: uuid, value: "30a12709-e029-400d-85a4-582109fbb923"}
+              - column: {name: title, value: "Разработка ПО"}
+              - column: {name: cypher, value: "09.04.03/33.03"}
+              - column: {name: level, value: "MASTER"}
+              - column: {name: standard, value: "SUOS"}
+              - column: {name: institute_uuid, value: "6a0099be-2bd4-409b-aee2-10984c4df380"}
+              - column: {name: head_uuid, value: "0e887f76-2a05-11e1-b174-00259030b74f"}
+              - column: {name: accreditation_date, value: "2025-03-14"}
+        - insert:
+            tableName: program_modules
+            columns:
+              - column: {name: program_uuid, value: "30a12709-e029-400d-85a4-582109fbb923"}
+              - column: {name: module_uuid, value: "54e561d2-0a27-4644-b67a-47ab4e7881bc"}
+        - insert:
+            tableName: program_modules
+            columns:
+              - column: {name: program_uuid, value: "30a12709-e029-400d-85a4-582109fbb923"}
+              - column: {name: module_uuid, value: "65f672e3-1b38-5755-c78b-58bc5e8992cd"}
+      rollback:
+        - delete:
+            tableName: program_modules
+            where: program_uuid = '30a12709-e029-400d-85a4-582109fbb923'
+        - delete:
+            tableName: programs
+            where: uuid = '30a12709-e029-400d-85a4-582109fbb923'
+        - delete:
+            tableName: modules
+            where: uuid IN ('54e561d2-0a27-4644-b67a-47ab4e7881bc', '65f672e3-1b38-5755-c78b-58bc5e8992cd', '76a783f4-2c49-6866-d89c-69cd6f9aa3de')
+        - delete:
+            tableName: heads
+            where: uuid IN ('0e887f76-2a05-11e1-b174-00259030b74f', '1f998a87-3b16-22f2-c285-1136a041c86a', '2aaab98a-4c27-33a3-d396-2247b152d97a')
+        - delete:
+            tableName: institutes
+            where: uuid IN ('6a0099be-2bd4-409b-aee2-10984c4df380', '7b1100cf-3ce5-510c-bff3-21095d5e0491', '8c2211df-4df6-621d-aee4-32106e6f1502')
