@@ -11,5 +11,9 @@ import java.util.UUID;
 
 @Repository
 public interface ProgramRepository extends JpaRepository<Program, UUID> {
+    @Query("SELECT p FROM Program p LEFT JOIN FETCH p.modules LEFT JOIN FETCH p.institute LEFT JOIN FETCH p.head")
+    List<Program> findAllWithModules();
 
+    @Query("SELECT p FROM Program p LEFT JOIN FETCH p.modules LEFT JOIN FETCH p.institute LEFT JOIN FETCH p.head WHERE p.uuid = :uuid")
+    Optional<Program> findByIdWithModules(@Param("uuid") UUID uuid);
 }

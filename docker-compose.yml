@@ -28,16 +28,11 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      # Database - используем переменные без двоеточия
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/education_db
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}  # Без двоеточия
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}  # Без двоеточия
-
-      # JPA & Liquibase
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       SPRING_LIQUIBASE_ENABLED: "true"
-
-      # Security
       SPRING_SECURITY_USER_NAME: ${SECURITY_USER_NAME}
       SPRING_SECURITY_USER_PASSWORD: ${SECURITY_USER_PASSWORD}
 
