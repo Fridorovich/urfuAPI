@@ -1,0 +1,112 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: fridorovich
+      context: production
+      changes:
+        - insert:
+            tableName: institutes
+            columns:
+              - column: {name: uuid, value: "9d3322df-5ef7-732e-bff5-43217f7a2613"}
+              - column: {name: title, value: "Институт экономики"}
+        - insert:
+            tableName: institutes
+            columns:
+              - column: {name: uuid, value: "0e4433df-6af8-843f-caa6-54328a8a3724"}
+              - column: {name: title, value: "Институт гуманитарных наук"}
+
+        - insert:
+            tableName: heads
+            columns:
+              - column: {name: uuid, value: "3fbba98b-5d38-44a4-e407-3358c263e08a"}
+              - column: {name: fullname, value: "Иванов Иван Иванович"}
+        - insert:
+            tableName: heads
+            columns:
+              - column: {name: uuid, value: "4accb09c-6e49-55a5-f518-4469d374f19a"}
+              - column: {name: fullname, value: "Кузнецов Дмитрий Алексеевич"}
+
+        - insert:
+            tableName: modules
+            columns:
+              - column: {name: uuid, value: "87b894e5-3d5a-7877-e90d-7ade7aabb4ef"}
+              - column: {name: title, value: "Управление проектами"}
+              - column: {name: type, value: "PROJECT_EDUCATION"}
+        - insert:
+            tableName: modules
+            columns:
+              - column: {name: uuid, value: "98c905f6-4e6b-8988-f01e-8bef8abcc5fa"}
+              - column: {name: title, value: "Бизнес-планирование"}
+              - column: {name: type, value: "STANDARD"}
+        - insert:
+            tableName: modules
+            columns:
+              - column: {name: uuid, value: "09d016a7-5f7c-9099-a12f-9cfa9acdd6aa"}
+              - column: {name: title, value: "Английский язык"}
+              - column: {name: type, value: "FOREIGN_LANGUAGE"}
+
+        - insert:
+            tableName: programs
+            columns:
+              - column: {name: uuid, value: "41b23819-f130-511e-96b5-693220accd34"}
+              - column: {name: title, value: "Цифровая экономика и управление данными"}
+              - column: {name: cypher, value: "38.04.05/45.02"}
+              - column: {name: level, value: "MASTER"}
+              - column: {name: standard, value: "SUOS"}
+              - column: {name: institute_uuid, value: "9d3322df-5ef7-732e-bff5-43217f7a2613"}
+              - column: {name: head_uuid, value: "3fbba98b-5d38-44a4-e407-3358c263e08a"}
+              - column: {name: accreditation_date, value: "2027-05-20"}
+        - insert:
+            tableName: programs
+            columns:
+              - column: {name: uuid, value: "52c3492a-a241-622f-a7b6-7a4331add45a"}
+              - column: {name: title, value: "Искусственный интеллект и машинное обучение"}
+              - column: {name: cypher, value: "01.04.02/56.01"}
+              - column: {name: level, value: "MASTER"}
+              - column: {name: standard, value: "FGOS_VO"}
+              - column: {name: institute_uuid, value: "6a0099be-2bd4-409b-aee2-10984c4df380"}
+              - column: {name: head_uuid, value: "4accb09c-6e49-55a5-f518-4469d374f19a"}
+              - column: {name: accreditation_date, value: "2026-12-01"}
+
+        - insert:
+            tableName: program_modules
+            columns:
+              - column: {name: program_uuid, value: "41b23819-f130-511e-96b5-693220accd34"}
+              - column: {name: module_uuid, value: "87b894e5-3d5a-7877-e90d-7ade7aabb4ef"}
+        - insert:
+            tableName: program_modules
+            columns:
+              - column: {name: program_uuid, value: "41b23819-f130-511e-96b5-693220accd34"}
+              - column: {name: module_uuid, value: "98c905f6-4e6b-8988-f01e-8bef8abcc5fa"}
+        - insert:
+            tableName: program_modules
+            columns:
+              - column: {name: program_uuid, value: "41b23819-f130-511e-96b5-693220accd34"}
+              - column: {name: module_uuid, value: "09d016a7-5f7c-9099-a12f-9cfa9acdd6aa"}
+        - insert:
+            tableName: program_modules
+            columns:
+              - column: {name: program_uuid, value: "52c3492a-a241-622f-a7b6-7a4331add45a"}
+              - column: {name: module_uuid, value: "87b894e5-3d5a-7877-e90d-7ade7aabb4ef"}
+        - insert:
+            tableName: program_modules
+            columns:
+              - column: {name: program_uuid, value: "52c3492a-a241-622f-a7b6-7a4331add45a"}
+              - column: {name: module_uuid, value: "54e561d2-0a27-4644-b67a-47ab4e7881bc"}
+
+      rollback:
+        - delete:
+            tableName: program_modules
+            where: program_uuid IN ('41b23819-f130-511e-96b5-693220accd34', '52c3492a-a241-622f-a7b6-7a4331add45a')
+        - delete:
+            tableName: programs
+            where: uuid IN ('41b23819-f130-511e-96b5-693220accd34', '52c3492a-a241-622f-a7b6-7a4331add45a')
+        - delete:
+            tableName: modules
+            where: uuid IN ('87b894e5-3d5a-7877-e90d-7ade7aabb4ef', '98c905f6-4e6b-8988-f01e-8bef8abcc5fa', '09d016a7-5f7c-9099-a12f-9cfa9acdd6aa')
+        - delete:
+            tableName: heads
+            where: uuid IN ('3fbba98b-5d38-44a4-e407-3358c263e08a', '4accb09c-6e49-55a5-f518-4469d374f19a')
+        - delete:
+            tableName: institutes
+            where: uuid IN ('9d3322df-5ef7-732e-bff5-43217f7a2613', '0e4433df-6af8-843f-caa6-54328a8a3724')
