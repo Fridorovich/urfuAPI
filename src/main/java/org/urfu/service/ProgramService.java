@@ -13,9 +13,15 @@ import org.urfu.enums.EducationStandard;
 import org.urfu.mapper.ProgramMapper;
 import org.urfu.repository.*;
 import jakarta.persistence.EntityNotFoundException;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Сервис для управления образовательными программами.
+ * Предоставляет полный CRUD функционал, а также дополнительные методы
+ * для работы с модулями и сортировки программ.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -27,6 +33,15 @@ public class ProgramService {
     private final HeadRepository headRepository;
     private final ProgramMapper programMapper;
 
+    /**
+     * Создает новую образовательную программу.
+     * Проверяет существование института и ответственного лица.
+     * Привязывает указанные модули к программе.
+     *
+     * @param dto данные для создания программы
+     * @return созданная программа в виде DTO
+     * @throws EntityNotFoundException если институт или ответственное лицо не найдены
+     */
     @Transactional
     public ProgramDTO createProgram(ProgramCreateUpdateDTO dto) {
         log.info("Creating program: {}", dto.getTitle());
@@ -57,6 +72,12 @@ public class ProgramService {
         return programMapper.toDTO(saved);
     }
 
+    /**
+     * Получает список всех образовательных программ.
+     * Программы загружаются со всеми связанными сущностями.
+     *
+     * @return список всех программ в виде DTO
+     */
     @Transactional(readOnly = true)
     public List<ProgramDTO> getAllPrograms() {
         log.info("Getting all programs");
@@ -66,6 +87,14 @@ public class ProgramService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Получает программу по её UUID.
+     * Программа загружается со всеми связанными сущностями.
+     *
+     * @param uuid UUID программы
+     * @return программа в виде DTO
+     * @throws EntityNotFoundException если программа не найдена
+     */
     @Transactional(readOnly = true)
     public ProgramDTO getProgramById(UUID uuid) {
         log.info("Getting program by id: {}", uuid);
@@ -74,6 +103,16 @@ public class ProgramService {
         return programMapper.toDTO(program);
     }
 
+    /**
+     * Обновляет существующую образовательную программу.
+     * Проверяет существование всех связанных сущностей.
+     * Обновляет список модулей программы.
+     *
+     * @param uuid UUID обновляемой программы
+     * @param dto  новые данные для программы
+     * @return обновленная программа в виде DTO
+     * @throws EntityNotFoundException если программа, институт или ответственное лицо не найдены
+     */
     @Transactional
     public ProgramDTO updateProgram(UUID uuid, ProgramCreateUpdateDTO dto) {
         log.info("Updating program: {}", uuid);
@@ -104,6 +143,12 @@ public class ProgramService {
         return programMapper.toDTO(updated);
     }
 
+    /**
+     * Удаляет образовательную программу по её UUID.
+     *
+     * @param uuid UUID удаляемой программы
+     * @throws EntityNotFoundException если программа не найдена
+     */
     @Transactional
     public void deleteProgram(UUID uuid) {
         log.info("Deleting program: {}", uuid);
@@ -113,12 +158,26 @@ public class ProgramService {
         programRepository.deleteById(uuid);
     }
 
+    /**
+     * Получает список всех программ с модулями.
+     * Аналогичен методу getAllPrograms().
+     *
+     * @return список программ с модулями
+     */
     @Transactional(readOnly = true)
     public List<ProgramDTO> getProgramsWithModules() {
         log.info("Getting programs with modules");
         return getAllPrograms();
     }
 
+    /**
+     * Получает отсортированный список программ.
+     * Реализована ручная сортировка на уровне сервиса.
+     *
+     * @param sortBy поле для сортировки
+     * @return отсортированный список программ
+     * @throws IllegalArgumentException если указано некорректное поле для сортировки
+     */
     @Transactional(readOnly = true)
     public List<ProgramDTO> getSortedPrograms(String sortBy) {
         log.info("Getting programs sorted by: {}", sortBy);
@@ -148,6 +207,15 @@ public class ProgramService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Добавляет существующий модуль к программе.
+     * Проверяет, что модуль еще не привязан к программе.
+     *
+     * @param programUuid UUID программы
+     * @param moduleUuid  UUID добавляемого модуля
+     * @return обновленная программа с новым модулем
+     * @throws EntityNotFoundException если программа или модуль не найдены
+     */
     @Transactional
     public ProgramDTO addModuleToProgram(UUID programUuid, UUID moduleUuid) {
         Program program = programRepository.findById(programUuid)
@@ -168,6 +236,15 @@ public class ProgramService {
         return programMapper.toDTO(updated);
     }
 
+    /**
+     * Удаляет модуль из программы.
+     * Модуль не удаляется из системы, только отвязывается от программы.
+     *
+     * @param programUuid UUID программы
+     * @param moduleUuid  UUID удаляемого модуля
+     * @return обновленная программа без удаленного модуля
+     * @throws EntityNotFoundException если программа не найдена
+     */
     @Transactional
     public ProgramDTO removeModuleFromProgram(UUID programUuid, UUID moduleUuid) {
         Program program = programRepository.findById(programUuid)

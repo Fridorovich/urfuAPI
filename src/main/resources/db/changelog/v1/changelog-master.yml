@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/v1/01-create-tables.yml
   - include:
       file: db/changelog//v1/02-insert-initial-data.yml
+  - include:
+      file: db/changelog//v1/03-add-programs.yml

@@ -37,6 +37,27 @@ spring:
     parameters:
       tablePrefix: ""
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    try-it-out-enabled: true
+    display-request-duration: true
+    filter: true
+    show-actuator: true
+    doc-expansion: none
+  api-docs:
+    path: /v3/api-docs
+    groups:
+      enabled: true
+  show-actuator: true
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+  use-fqn: false
+  writer-with-default-prettify: true
+  remove-broken-reference-definitions: true
+
 server:
   port: 8080
   servlet:
