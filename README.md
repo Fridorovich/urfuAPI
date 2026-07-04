@@ -1,6 +1,6 @@
 # Education Service API
 
-[![CI](https://github.com/YOUR_USERNAME/YOUR_REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/YOUR_REPO/actions/workflows/ci.yml)
+[![CI](https://github.com/Fridorovich/urfuAPI/actions/workflows/ci.yml/badge.svg)](https://github.com/Fridorovich/urfuAPI/actions/workflows/ci.yml)
 [![Java Version](https://img.shields.io/badge/Java-21-blue.svg)](https://adoptium.net/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.3-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
