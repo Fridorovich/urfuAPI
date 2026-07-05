@@ -64,7 +64,7 @@ SECURITY_USER_PASSWORD=admin123
 ### Запуск с Docker Compose
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/urfuAPI.git
+git clone https://github.com/fridorovich/urfuAPI.git
 cd urfuAPI
 docker-compose up -d
 ```
@@ -133,7 +133,8 @@ docker-compose up -d
 | DELETE | `/api/modules/{uuid}` | Удаление модуля |
 
 ---
-
+![Документация1](images/энд.PNG)
+![Документация2](images/энд1.PNG)
 ## Примеры запросов
 
 ### Создание программы
@@ -168,4 +169,4 @@ mvn clean test jacoco:report
 ```bash
 start target\site\jacoco\index.html
 ```
-![Отчет JaCoCo](images/покрытие.png)
+![Отчет JaCoCo](images/покрытие.PNG)
